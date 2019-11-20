@@ -1,5 +1,5 @@
 # neo4j-cqb
-Query builder for Cypher language
+**Query builder for Cypher language**
 
 A flexible and intuitive query builder for Neo4j and Cypher. Write queries in Javascript just as you would write them in Cypher.
 
@@ -25,6 +25,17 @@ const query = Cypher.MATCH()
     RETURN r
 */
 ```
+
+# Currently supported
+## Operators
+* CREATE
+* MATCH
+* INSERT
+* RETURN
+## Features
+* Operating with nodes
+* Operating with relations
+
 
 # Installation
 
