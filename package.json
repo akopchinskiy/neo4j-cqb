@@ -2,9 +2,11 @@
   "name": "neo4j-cypher-query-builder",
   "version": "0.1.0",
   "description": "Query builder for Cypher language",
-  "main": "index.js",
+  "main": "lib/Cypher.js",
   "scripts": {
-    "test": "mocha --ui mocha-typescript tests/main.test.ts --require ts-node/register --reporter spec"
+    "test": "mocha --ui mocha-typescript tests/main.test.ts --require ts-node/register --reporter spec",
+    "publish": "npm publish",
+    "build": "tsc"
   },
   "author": "Artem Kopchinskiy",
   "license": "GNU GPLv3",
