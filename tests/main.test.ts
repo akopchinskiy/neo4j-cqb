@@ -1,6 +1,7 @@
 import { suite, test } from 'mocha-typescript';
 import { expect } from 'chai';
 import { Cypher } from '../src/Cypher';
+import { Utils } from '../src/utils';
 
 @suite
 export class CypherQueryTests {
@@ -24,7 +25,7 @@ export class CypherQueryTests {
         }`.replace(/[\n ]/ig, '').trim();
 
         // @ts-ignore
-        const result = Cypher.stringify(ob1);
+        const result = Utils.stringify(ob1);
 
         expect(result).to.be.equal(expectedResult);
     }
@@ -35,9 +36,9 @@ export class CypherQueryTests {
         const block2 = ':person';
 
         // @ts-ignore
-        const result1 = Cypher.parseBlock(block1);
+        const result1 = Utils.parseBlock(block1);
         // @ts-ignore
-        const result2 = Cypher.parseBlock(block2);
+        const result2 = Utils.parseBlock(block2);
 
         expect(result1).to.be.deep.equal({
             name: 'b1',

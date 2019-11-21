@@ -1,4 +1,4 @@
-
+import { Utils } from './utils';
 
 /**
  * @description Class for construction Cypher queries
@@ -17,35 +17,6 @@ export abstract class Cypher {
         returnOp: ''
     };
     private static nodePointer = 0; // 0 = start, 1 = end
-
-
-    private static stringify(obj: object) {
-        let result: string;
-
-        if (Object.keys(obj).length > 0) {
-            result = obj ? JSON.stringify(obj) : '';
-        }
-        else {
-            result = '';
-        }
-
-        return result ? result.replace(/"([$\w]+)":/g, '$1:') : '';
-    }
-
-    private static parseBlock(block: string) {
-        const result = /^(([\d\w]+)+)?:([\d\w]+)$/i.exec(block);
-
-        if (result) {
-            const [, , name = '', type = ''] = result;
-            return { name, type };
-        }
-        else {
-            return {
-                name: '',
-                type: ''
-            };
-        }
-    }
 
 
     static CREATE() {
@@ -83,7 +54,7 @@ export abstract class Cypher {
         block: string,
         where = {}
     ) {
-        const { name, type } = Cypher.parseBlock(block);
+        const { name, type } = Utils.parseBlock(block);
 
         if (type) {
             block = `${name}:${type}`;
@@ -92,7 +63,7 @@ export abstract class Cypher {
             block = '';
         }
 
-        const node = `(${block}${Cypher.stringify(where)})`;
+        const node = `(${block}${Utils.stringify(where)})`;
 
         if (Cypher.nodePointer === 0) {
             Cypher.buffer.startNode = node;
@@ -118,7 +89,7 @@ export abstract class Cypher {
         Cypher.isRelated = true;
 
         if (block) {
-            const result = Cypher.parseBlock(block);
+            const result = Utils.parseBlock(block);
 
             name = result.name;
             type = result.type;
@@ -132,7 +103,7 @@ export abstract class Cypher {
         }
 
         if (block)
-            Cypher.buffer.relation = `[${block}${Cypher.stringify(where)}]`;
+            Cypher.buffer.relation = `[${block}${Utils.stringify(where)}]`;
         else
             Cypher.buffer.relation = '';
 
@@ -155,8 +126,6 @@ export abstract class Cypher {
         Cypher.buffer.relationDirectionEnd = '->';
         Cypher.nodePointer = 1;
 
-        console.log('to');
-
         return { node: Cypher.node };
     }
     private static between() {
@@ -175,9 +144,9 @@ export abstract class Cypher {
         return { RETURN: Cypher.RETURN };
     }
 
-    //static implicit() {
+    // static implicit() {
     //    return { node: Cypher.node };
-    //}
+    // }
 
     private static complete() {
         const {
